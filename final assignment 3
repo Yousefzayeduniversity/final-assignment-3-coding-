@@ -1,0 +1,129 @@
+class Employee:
+    def __init__(self, id, name, department, job_title, basic_salary, manager_id=None):
+        self.id = id
+        self.name = name
+        self.department = department
+        self.job_title = job_title
+        self.basic_salary = basic_salary
+        self.manager_id = manager_id
+
+    def __str__(self):
+        manager_str = f", Manager ID: {self.manager_id}" if self.manager_id else ""
+        return f"Employee(ID: {self.id}, Name: {self.name}, Department: {self.department}, Job Title: {self.job_title}, Salary: {self.basic_salary}{manager_str})"
+
+# Additional Employee Classes
+class ManufacturingEmployee(Employee):
+    def __init__(self, id, name, department, job_title, basic_salary, manager_id=None, working_shift=None):
+        super().__init__(id, name, department, job_title, basic_salary, manager_id)
+        self.working_shift = working_shift
+
+    def __str__(self):
+        return super().__str__() + f", Working Shift: {self.working_shift}"
+
+class ITSupportEmployee(Employee):
+    def __init__(self, id, name, department, job_title, basic_salary, manager_id=None, support_level=None):
+        super().__init__(id, name, department, job_title, basic_salary, manager_id)
+        self.support_level = support_level
+
+    def __str__(self):
+        return super().__str__() + f", Support Level: {self.support_level}"
+class Event:
+    def __init__(self, event_id, type, theme, date, time, duration, venue, client):
+        self.event_id = event_id
+        self.type = type
+        self.theme = theme
+        self.date = date
+        self.time = time
+        self.duration = duration
+        self.venue = venue
+        self.client = client
+        self.guests = []
+        self.suppliers = []
+
+    def add_guest(self, guest):
+        self.guests.append(guest)
+
+    def add_supplier(self, supplier):
+        self.suppliers.append(supplier)
+
+    def __str__(self):
+        guest_names = ', '.join([guest.name for guest in self.guests])
+        supplier_details = ', '.join([str(supplier) for supplier in self.suppliers])
+        return f"Event(ID: {self.event_id}, Type: {self.type}, Theme: {self.theme}, Date: {self.date}, Time: {self.time}, Duration: {self.duration} hours, Venue: {self.venue.name}, Client: {self.client.name}, Guests: [{guest_names}], Suppliers: [{supplier_details}])"
+class Client:
+    def __init__(self, client_id, name, address, contact_details, budget):
+        self.client_id = client_id
+        self.name = name
+        self.address = address
+        self.contact_details = contact_details
+        self.budget = budget
+
+    def __str__(self):
+        return f"Client(ID: {self.client_id}, Name: {self.name}, Address: {self.address}, Contact: {self.contact_details}, Budget: {self.budget})"
+class Guest:
+    def __init__(self, guest_id, name, contact_details):
+        self.guest_id = guest_id
+        self.name = name
+        self.contact_details = contact_details
+
+    def __str__(self):
+        return f"Guest(ID: {self.guest_id}, Name: {self.name}, Contact Details: {self.contact_details})"
+class Supplier:
+    def __init__(self, supplier_id, name, type, contact_details):
+        self.supplier_id = supplier_id
+        self.name = name
+        self.type = type
+        self.contact_details = contact_details
+
+    def __str__(self):
+        return f"Supplier(ID: {self.supplier_id}, Name: {self.name}, Type: {self.type}, Contact Details: {self.contact_details})"
+class Venue:
+    def __init__(self, venue_id, name, address, contact, min_guests, max_guests):
+        self.venue_id = venue_id
+        self.name = name
+        self.address = address
+        self.contact = contact
+        self.min_guests = min_guests
+        self.max_guests = max_guests
+
+    def __str__(self):
+        return f"Venue(ID: {self.venue_id}, Name: {self.name}, Address: {self.address}, Contact: {self.contact}, Capacity: {self.min_guests}-{self.max_guests})"
+
+
+def run_test_cases():
+    # Managers
+    manager_susan = Employee(1, "Susan Meyers", "Sales", "Manager", 37500)
+    manager_joy = Employee(3, "Joy Rogers", "Production", "Manager", 36500)
+
+    # Specific Employees
+    employee_shyam = ManufacturingEmployee(4, "Shyam Sundar", "Production", "Engineer", 28500, manager_id=3,
+                                           working_shift="Night")
+    employee_salma = ITSupportEmployee(5, "Salma J Sam", "IT Support", "Technician", 27000, manager_id=1,
+                                       support_level="Level 2")
+    salesperson_mariam = Employee(2, "Mariam Khalid", "Sales", "Salesperson", 20000, manager_id=1)
+
+    # Creating a client and a venue
+    client_acme = Client(1, "Acme Corp", "123 Blue St", "050-455-4545", 10000)
+    venue_ocean = Venue(1, "Ocean View", "456 Beach Rd", "050-4564656", 100, 200)
+
+    # Creating an event
+    event_wedding = Event(1, "Wedding", "Beach", "2024-05-20", "17:00", 5, venue_ocean, client_acme)
+    guest_alice = Guest(1, "Alice Johnson", "050-333-2323")
+    supplier_catering = Supplier(1, "Delicious Catering", "Catering", "056-771-9898")
+
+    # Adding a guest and supplier to the event
+    event_wedding.add_guest(guest_alice)
+    event_wedding.add_supplier(supplier_catering)
+
+    # Printing details to validate correctness
+    print(manager_susan)
+    print(manager_joy)
+    print(employee_shyam)
+    print(employee_salma)
+    print(salesperson_mariam)
+    print(client_acme)
+    print(venue_ocean)
+    print(event_wedding)
+
+
+run_test_cases()
