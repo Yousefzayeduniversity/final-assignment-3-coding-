@@ -127,3 +127,94 @@ def run_test_cases():
 
 
 run_test_cases()
+
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+
+# Placeholder for backend storage
+employees = []
+events = []
+clients = []
+guests = []
+suppliers = []
+
+# Initialize the main window
+root = tk.Tk()
+root.title("Event Management System")
+root.geometry("800x600")  # Set a default size for the window
+
+# Create a notebook (tab control)
+tab_control = ttk.Notebook(root)
+
+# Create individual tabs
+tab_employee = ttk.Frame(tab_control)
+tab_event = ttk.Frame(tab_control)
+tab_client = ttk.Frame(tab_control)
+tab_guest = ttk.Frame(tab_control)
+tab_supplier = ttk.Frame(tab_control)
+
+# Add tabs to the notebook
+tab_control.add(tab_employee, text='Employees')
+tab_control.add(tab_event, text='Events')
+tab_control.add(tab_client, text='Clients')
+tab_control.add(tab_guest, text='Guests')
+tab_control.add(tab_supplier, text='Suppliers')
+tab_control.pack(expand=1, fill="both")
+
+# Function to add new data to backend lists
+def add_data(storage, data):
+    storage.append(data)
+    return data
+
+# Function to refresh list boxes
+def refresh_listbox(listbox, data):
+    listbox.delete(0, tk.END)
+    for item in data:
+        listbox.insert(tk.END, item)
+
+# Function to handle adding employees
+def handle_add_employee():
+    name = entry_emp_name.get()
+    if name:
+        new_emp = f"Employee: {name}"
+        add_data(employees, new_emp)
+        refresh_listbox(listbox_employees, employees)
+        entry_emp_name.delete(0, tk.END)
+
+# Setting up the Employee Tab
+lbl_emp_name = tk.Label(tab_employee, text="Employee Name:")
+lbl_emp_name.pack(pady=10)
+entry_emp_name = tk.Entry(tab_employee, width=50)
+entry_emp_name.pack(pady=10)
+btn_add_emp = tk.Button(tab_employee, text="Add Employee", command=handle_add_employee)
+btn_add_emp.pack(pady=10)
+listbox_employees = tk.Listbox(tab_employee)
+listbox_employees.pack(fill=tk.BOTH, expand=True, pady=10)
+
+# Similar setup can be replicated for Events, Clients, Guests, and Suppliers
+# Example for the Event tab
+def handle_add_event():
+    description = entry_event_desc.get()
+    if description:
+        new_event = f"Event: {description}"
+        add_data(events, new_event)
+        refresh_listbox(listbox_events, events)
+        entry_event_desc.delete(0, tk.END)
+
+lbl_event_desc = tk.Label(tab_event, text="Event Description:")
+lbl_event_desc.pack(pady=10)
+entry_event_desc = tk.Entry(tab_event, width=50)
+entry_event_desc.pack(pady=10)
+btn_add_event = tk.Button(tab_event, text="Add Event", command=handle_add_event)
+btn_add_event.pack(pady=10)
+listbox_events = tk.Listbox(tab_event)
+listbox_events.pack(fill=tk.BOTH, expand=True, pady=10)
+
+# Main loop
+def main():
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
